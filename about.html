@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About — Ainex</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0A0E16;
+    --panel:#131826;
+    --line: rgba(255,255,255,0.09);
+    --line-strong: rgba(255,255,255,0.18);
+    --text:#EAECEF;
+    --text-dim:#8B93A3;
+    --cyan:#4FD1E5;
+    --violet:#8B7FFF;
+    --amber:#F0A855;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:'IBM Plex Sans', sans-serif;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  .wrap{max-width:1000px; margin:0 auto; padding:0 32px; position:relative; z-index:2;}
+  a{color:inherit;}
+
+  .grid-bg{
+    position:fixed; inset:0; z-index:0; pointer-events:none;
+    background-image:
+      linear-gradient(var(--line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line) 1px, transparent 1px);
+    background-size:64px 64px;
+    mask-image:radial-gradient(ellipse 80% 60% at 50% 0%, black 40%, transparent 100%);
+    opacity:0.35;
+  }
+  .glow{position:fixed; z-index:0; pointer-events:none; border-radius:50%; filter:blur(90px); opacity:0.22;}
+  .glow-1{width:520px; height:520px; top:-160px; left:-120px; background:var(--cyan);}
+  .glow-2{width:420px; height:420px; top:200px; right:-140px; background:var(--violet);}
+
+  header{
+    padding:26px 0;
+    border-bottom:1px solid var(--line);
+    position:sticky; top:0; z-index:10;
+    backdrop-filter:blur(14px);
+    background:rgba(10,14,22,0.72);
+  }
+  header .wrap{display:flex; justify-content:space-between; align-items:center;}
+  .logo{
+    font-family:'Space Grotesk', sans-serif; font-weight:700; font-size:20px;
+    letter-spacing:-0.01em; display:flex; align-items:center; gap:8px;
+    text-decoration:none;
+  }
+  .logo .dot{width:7px; height:7px; border-radius:50%; background:var(--cyan); box-shadow:0 0 10px var(--cyan);}
+  nav{display:flex; gap:34px; font-size:13.5px; font-weight:500;}
+  nav a{text-decoration:none; color:var(--text-dim); transition:color 0.2s;}
+  nav a:hover, nav a.active{color:var(--text);}
+
+  .hero{padding:90px 0 50px;}
+  .eyebrow{
+    font-family:'IBM Plex Mono', monospace; font-size:12.5px; color:var(--cyan);
+    letter-spacing:0.08em; text-transform:uppercase; margin-bottom:24px;
+    display:inline-flex; align-items:center; gap:10px;
+    border:1px solid var(--line-strong); padding:7px 16px; border-radius:20px;
+    background:rgba(79,209,229,0.06);
+  }
+  .eyebrow::before{content:''; width:6px; height:6px; border-radius:50%; background:var(--cyan); box-shadow:0 0 8px var(--cyan);}
+  h1{
+    font-family:'Space Grotesk', sans-serif; font-weight:600; font-size:48px;
+    line-height:1.1; max-width:700px; letter-spacing:-0.02em;
+  }
+  h1 .grad{
+    background:linear-gradient(90deg, var(--cyan), var(--violet));
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+  }
+  .role{
+    font-family:'IBM Plex Mono', monospace; font-size:14px; color:var(--text-dim);
+    margin-top:16px;
+  }
+  .lede{max-width:640px; font-size:17px; color:var(--text-dim); margin-top:28px;}
+
+  section{padding:52px 0;}
+  .section-head{display:flex; justify-content:space-between; align-items:baseline; margin-bottom:32px;}
+  h2{font-family:'Space Grotesk', sans-serif; font-weight:600; font-size:26px; letter-spacing:-0.01em;}
+  .section-tag{font-family:'IBM Plex Mono', monospace; font-size:12px; color:var(--cyan); letter-spacing:0.04em;}
+
+  .highlights{display:grid; grid-template-columns:repeat(2,1fr); gap:14px;}
+  .highlight{
+    background:var(--panel); border:1px solid var(--line); border-radius:12px;
+    padding:22px 22px; font-size:14px; color:var(--text-dim);
+  }
+  .highlight::before{content:'—'; color:var(--cyan); margin-right:8px;}
+
+  .timeline{display:flex; flex-direction:column;}
+  .role-item{
+    display:grid; grid-template-columns:180px 1fr; gap:24px;
+    padding:22px 0; border-top:1px solid var(--line);
+  }
+  .role-item:first-child{border-top:none;}
+  .role-item .when{
+    font-family:'IBM Plex Mono', monospace; font-size:12.5px; color:var(--violet);
+  }
+  .role-item h4{font-family:'Space Grotesk', sans-serif; font-size:17px; font-weight:600; margin-bottom:4px;}
+  .role-item .org{font-size:13.5px; color:var(--text-dim); margin-bottom:10px;}
+  .role-item p{font-size:14px; color:var(--text-dim);}
+
+  .skills-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:16px;}
+  .skill-card{background:var(--panel); border:1px solid var(--line); border-radius:12px; padding:24px;}
+  .skill-card h4{
+    font-family:'IBM Plex Mono', monospace; font-size:11.5px; letter-spacing:0.06em;
+    color:var(--cyan); text-transform:uppercase; margin-bottom:16px;
+  }
+  .skill-card ul{list-style:none;}
+  .skill-card li{font-size:13.5px; color:var(--text-dim); padding:6px 0; border-top:1px solid var(--line);}
+  .skill-card li:first-child{border-top:none;}
+
+  .chips{display:flex; flex-wrap:wrap; gap:10px;}
+  .chip{
+    font-family:'IBM Plex Mono', monospace; font-size:12.5px; color:var(--text-dim);
+    border:1px solid var(--line-strong); border-radius:20px; padding:7px 16px;
+  }
+
+  .cta-row{display:flex; gap:14px; margin-top:38px;}
+  .btn{
+    display:inline-flex; align-items:center; gap:8px; padding:13px 26px;
+    font-size:14px; font-weight:600; text-decoration:none; border-radius:8px; transition:all 0.2s;
+  }
+  .btn-primary{background:linear-gradient(90deg, var(--cyan), var(--violet)); color:#08101A;}
+  .btn-primary:hover{filter:brightness(1.08);}
+  .btn-secondary{border:1px solid var(--line-strong); color:var(--text);}
+  .btn-secondary:hover{background:rgba(255,255,255,0.04);}
+
+  footer{
+    padding:32px 0 48px; font-size:12.5px; color:var(--text-dim);
+    display:flex; justify-content:space-between; border-top:1px solid var(--line); margin-top:20px;
+  }
+
+  @media (max-width:720px){
+    h1{font-size:34px;}
+    .highlights, .skills-grid{grid-template-columns:1fr;}
+    .role-item{grid-template-columns:1fr; gap:6px;}
+    nav{display:none;}
+  }
+</style>
+</head>
+<body>
+
+<div class="grid-bg"></div>
+<div class="glow glow-1"></div>
+<div class="glow glow-2"></div>
+
+<header>
+  <div class="wrap">
+    <a class="logo" href="index.html"><span class="dot"></span>ainex</a>
+    <nav>
+      <a href="index.html#services">Services</a>
+      <a href="index.html#approach">Approach</a>
+      <a href="about.html" class="active">About</a>
+      <a href="index.html#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap">
+  <section class="hero">
+    <div class="eyebrow">about</div>
+    <h1>Robert Noble — <span class="grad">agentic AI, built to survive regulation.</span></h1>
+    <div class="role">GTM Lead Healthcare · Lead AI Technologist</div>
+    <p class="lede">20+ years across Microsoft platforms and enterprise architecture, with the last four years focused specifically on applying LLMs, agentic orchestration and conversational AI to healthcare and other regulated environments. I design and govern agentic pipelines — prompting, retrieval, tool use, multi-model orchestration — and build the evaluation, safety and compliance frameworks that make them deployable, not just demoable.</p>
+    <div class="cta-row">
+      <a href="index.html#contact" class="btn btn-primary">Book a scoping call →</a>
+      <a href="index.html" class="btn btn-secondary">Back to home</a>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <h2>What that means in practice</h2>
+      <span class="section-tag">delivery, not research</span>
+    </div>
+    <div class="highlights">
+      <div class="highlight">Architected multi-step agentic systems combining prompt/context engineering, tool use and FHIR R4 retrieval for live clinical workflows — triage, clinical coding, referral management.</div>
+      <div class="highlight">Built and governed AI safety/evaluation frameworks: a multi-vector agent security testing framework, a NIST AI RMF compliance checker, and a layered Responsible AI reference architecture.</div>
+      <div class="highlight">Led health-domain data engineering at scale: HL7 v2 to FHIR R4 mapping, clinical ontology curation, and multi-source EPR/PAS data transformation.</div>
+      <div class="highlight">Directed evaluation and QA gating for regulated AI products against DCB0129/0160, DTAC, DSPT and UK GDPR.</div>
+      <div class="highlight">Taken sovereign LLM architecture, multilingual conversational AI, and ambient voice technology from technical feasibility to working, demoable systems.</div>
+      <div class="highlight">Works daily with clinicians, product owners, compliance and engineering — translating technical AI capability into language and evidence non-technical stakeholders can trust.</div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <h2>Career</h2>
+      <span class="section-tag">20+ years, microsoft platform</span>
+    </div>
+    <div class="timeline">
+      <div class="role-item">
+        <div class="when">2026 — present</div>
+        <div>
+          <h4>GTM Lead Healthcare / Lead AI Technologist</h4>
+          <div class="org">DXC Technology</div>
+          <p>Healthcare vertical AI lead across NHS acute, mental health and public health accounts. Owns technical architecture and delivery for agentic AI, health data platform and governance engagements from discovery through production.</p>
+        </div>
+      </div>
+      <div class="role-item">
+        <div class="when">2022 — 2024</div>
+        <div>
+          <h4>Principal Microsoft Consultant</h4>
+          <div class="org">Bell Integration</div>
+          <p>Led Microsoft Azure and AI practice across enterprise and public sector accounts, including Salesforce Einstein Copilot agent implementations and Azure AI proof-of-concept builds.</p>
+        </div>
+      </div>
+      <div class="role-item">
+        <div class="when">2020 — 2022</div>
+        <div>
+          <h4>Principal Consultant</h4>
+          <div class="org">Trustmarque</div>
+          <p>Microsoft cloud and AI solution architecture across public and private sector accounts.</p>
+        </div>
+      </div>
+      <div class="role-item">
+        <div class="when">2018 — 2020</div>
+        <div>
+          <h4>Senior Consultant</h4>
+          <div class="org">SWORD Group</div>
+          <p>Microsoft platform architecture and delivery across commercial and public sector engagements.</p>
+        </div>
+      </div>
+      <div class="role-item">
+        <div class="when">2015 — 2018</div>
+        <div>
+          <h4>Consultant</h4>
+          <div class="org">Cognizant Microsoft Business Group</div>
+          <p>Microsoft technology consulting across enterprise clients including financial services and legal sectors.</p>
+        </div>
+      </div>
+      <div class="role-item">
+        <div class="when">Earlier career</div>
+        <div>
+          <h4>Various Microsoft technology roles</h4>
+          <div class="org">Barclays UK</div>
+          <p>Foundational Microsoft platform engineering and architecture experience in financial services.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <h2>Skills</h2>
+      <span class="section-tag">core capability</span>
+    </div>
+    <div class="skills-grid">
+      <div class="skill-card">
+        <h4>Agentic AI &amp; LLM orchestration</h4>
+        <ul>
+          <li>Copilot Studio</li>
+          <li>Azure OpenAI (GPT-4o)</li>
+          <li>Prompt &amp; context engineering</li>
+          <li>Multi-step tool-use agents</li>
+          <li>RAG &amp; multi-model orchestration</li>
+        </ul>
+      </div>
+      <div class="skill-card">
+        <h4>AI safety, evaluation &amp; governance</h4>
+        <ul>
+          <li>Agent security / penetration testing</li>
+          <li>NIST AI RMF</li>
+          <li>DCB0129 / DCB0160</li>
+          <li>DTAC / DSPT</li>
+          <li>Responsible AI architecture</li>
+        </ul>
+      </div>
+      <div class="skill-card">
+        <h4>Health data &amp; integration</h4>
+        <ul>
+          <li>FHIR R4</li>
+          <li>Azure Health Data Services</li>
+          <li>HL7 v2</li>
+          <li>Oracle Cerner EPR</li>
+          <li>ICD-10 / OPCS-4 ontologies</li>
+        </ul>
+      </div>
+      <div class="skill-card">
+        <h4>Platform &amp; cloud</h4>
+        <ul>
+          <li>Azure AI Foundry</li>
+          <li>Power Platform</li>
+          <li>AKS</li>
+          <li>Azure Static Web Apps</li>
+          <li>Salesforce Einstein Copilot</li>
+        </ul>
+      </div>
+      <div class="skill-card">
+        <h4>Delivery &amp; leadership</h4>
+        <ul>
+          <li>0-to-1 technical architecture</li>
+          <li>Cross-functional stakeholder leadership</li>
+          <li>Regulated-sector bid &amp; solution design</li>
+        </ul>
+      </div>
+      <div class="skill-card">
+        <h4>Domain</h4>
+        <ul>
+          <li>NHS &amp; public healthcare</li>
+          <li>UK public sector</li>
+          <li>Clinical governance &amp; compliance</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <h2>Sectors</h2>
+      <span class="section-tag">where the work has landed</span>
+    </div>
+    <div class="chips">
+      <span class="chip">NHS &amp; public healthcare</span>
+      <span class="chip">UK public sector</span>
+      <span class="chip">Financial services</span>
+      <span class="chip">Media &amp; broadcasting</span>
+      <span class="chip">Automotive engineering</span>
+      <span class="chip">Legal</span>
+      <span class="chip">Higher education</span>
+      <span class="chip">Telecommunications</span>
+      <span class="chip">Transport &amp; rail</span>
+    </div>
+  </section>
+
+  <footer>
+    <span>© 2026 Ainex</span>
+    <span>Newton Aycliffe, UK</span>
+  </footer>
+</div>
+
+</body>
+</html>
