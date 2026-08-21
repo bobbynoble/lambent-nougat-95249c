@@ -62,11 +62,36 @@
     font-size:20px;
     letter-spacing:-0.01em;
     display:flex; align-items:center; gap:8px;
+    color:var(--text);
+    text-decoration:none;
   }
   .logo .dot{width:7px; height:7px; border-radius:50%; background:var(--cyan); box-shadow:0 0 10px var(--cyan);}
   nav{display:flex; gap:34px; font-size:13.5px; font-weight:500;}
   nav a{text-decoration:none; color:var(--text-dim); transition:color 0.2s;}
   nav a:hover{color:var(--text);}
+  .nav-toggle{
+    display:none;
+    width:42px;
+    height:42px;
+    padding:0;
+    border:1px solid var(--line-strong);
+    border-radius:10px;
+    background:rgba(255,255,255,0.03);
+    color:var(--text);
+    cursor:pointer;
+    place-content:center;
+    gap:5px;
+  }
+  .nav-toggle span{
+    display:block;
+    width:18px;
+    height:1px;
+    background:currentColor;
+    transition:transform 0.2s, opacity 0.2s;
+  }
+  .nav-toggle[aria-expanded="true"] span:first-child{transform:translateY(6px) rotate(45deg);}
+  .nav-toggle[aria-expanded="true"] span:nth-child(2){opacity:0;}
+  .nav-toggle[aria-expanded="true"] span:last-child{transform:translateY(-6px) rotate(-45deg);}
 
   .hero{padding:110px 0 70px; text-align:center;}
   .eyebrow{
@@ -320,10 +345,36 @@
   }
 
   @media (max-width:720px){
-    h1{font-size:36px;}
+    .wrap{padding:0 20px;}
+    header{padding:16px 0;}
+    h1{font-size:clamp(32px, 10vw, 36px);}
+    .hero{padding:64px 0 42px;}
+    section{padding:44px 0;}
+    .section-head{align-items:flex-start; flex-direction:column; gap:8px; margin-bottom:28px;}
     .services, .about, .approach, .contact-inner{grid-template-columns:1fr;}
-    nav{display:none;}
-    .contact{padding:32px;}
+    nav{
+      display:none;
+      position:absolute;
+      top:calc(100% + 12px);
+      left:20px;
+      right:20px;
+      flex-direction:column;
+      gap:0;
+      padding:8px;
+      border:1px solid var(--line-strong);
+      border-radius:12px;
+      background:rgba(19,24,38,0.98);
+      box-shadow:0 18px 50px rgba(0,0,0,0.4);
+    }
+    nav[data-open="true"]{display:flex;}
+    nav a{padding:12px 14px; border-radius:8px;}
+    nav a:hover, nav a:focus-visible{background:rgba(255,255,255,0.05);}
+    .nav-toggle{display:grid;}
+    .cta-row{flex-direction:column;}
+    .cta-row .btn{width:100%; justify-content:center;}
+    .stack-line{margin:38px 0;}
+    .contact{padding:24px;}
+    footer{flex-direction:column; gap:6px;}
   }
 </style>
 </head>
@@ -335,8 +386,11 @@
 
 <header>
   <div class="wrap">
-    <div class="logo"><span class="dot"></span>ainex</div>
-    <nav>
+    <a class="logo" href="index.html" aria-label="Ainex home"><span class="dot"></span>ainex</a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="primary-nav" aria-label="Open navigation">
+      <span></span><span></span><span></span>
+    </button>
+    <nav id="primary-nav" data-open="false">
       <a href="#services">Services</a>
       <a href="#approach">Approach</a>
       <a href="about.html">About</a>
@@ -495,6 +549,27 @@
 </div>
 
 <script>
+  const navToggle = document.querySelector('.nav-toggle');
+  const primaryNav = document.getElementById('primary-nav');
+
+  const setNavigation = (open) => {
+    navToggle.setAttribute('aria-expanded', String(open));
+    navToggle.setAttribute('aria-label', open ? 'Close navigation' : 'Open navigation');
+    primaryNav.dataset.open = String(open);
+  };
+
+  navToggle.addEventListener('click', () => {
+    setNavigation(navToggle.getAttribute('aria-expanded') !== 'true');
+  });
+
+  primaryNav.addEventListener('click', (event) => {
+    if (event.target.closest('a')) setNavigation(false);
+  });
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') setNavigation(false);
+  });
+
   const contactForm = document.getElementById('contact-form');
   const formStatus = document.getElementById('form-status');
   const submitButton = contactForm.querySelector('button[type="submit"]');
