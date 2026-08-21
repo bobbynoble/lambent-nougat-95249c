@@ -277,6 +277,14 @@
   .contact p{color:var(--text-dim); font-size:14.5px; margin-top:14px; max-width:400px;}
   .contact .btn-primary{margin-top:24px;}
   form{display:flex; flex-direction:column; gap:12px;}
+  .field{display:flex; flex-direction:column; gap:7px;}
+  .field label{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11px;
+    letter-spacing:0.05em;
+    color:var(--text-dim);
+    text-transform:uppercase;
+  }
   input, textarea{
     background:rgba(255,255,255,0.03);
     border:1px solid var(--line-strong);
@@ -286,8 +294,20 @@
     font-size:14px;
     border-radius:8px;
   }
+  textarea{resize:vertical; min-height:104px;}
   input:focus, textarea:focus{outline:none; border-color:var(--cyan);}
   input::placeholder, textarea::placeholder{color:var(--text-dim);}
+  .contact-form .btn-primary{margin-top:4px; border:none; cursor:pointer; justify-content:center;}
+  .contact-form .btn-primary:disabled{cursor:wait; opacity:0.65;}
+  .form-status{
+    min-height:20px;
+    margin:0;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px;
+  }
+  .form-status.success{color:var(--cyan);}
+  .form-status.error{color:#ff8f9c;}
+  .bot-field{position:absolute; left:-9999px; width:1px; height:1px; overflow:hidden;}
 
   footer{
     padding:32px 0 48px;
@@ -437,14 +457,32 @@
         <div>
           <h2>Have a scope in mind?</h2>
           <p>Whether it's a discovery workshop, an architecture review, or embedded delivery capacity — tell me what you're working on and I'll tell you honestly whether I'm the right fit.</p>
-          <a href="mailto:hello@ainex.uk" class="btn btn-primary">hello@ainex.uk →</a>
+          <a href="mailto:LetsTalk@ainex.uk" class="btn btn-primary">LetsTalk@ainex.uk →</a>
         </div>
-        <form onsubmit="return false;">
-          <input type="text" placeholder="Name">
-          <input type="email" placeholder="Work email">
-          <input type="text" placeholder="Organisation">
-          <textarea rows="3" placeholder="What are you looking to solve?"></textarea>
-          <button type="submit" class="btn btn-primary" style="border:none; cursor:pointer; justify-content:center;">Send</button>
+        <form class="contact-form" id="contact-form" name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+          <input type="hidden" name="form-name" value="contact">
+          <input type="hidden" name="subject" value="New Ainex website enquiry">
+          <p class="bot-field" aria-hidden="true">
+            <label>Do not fill this out <input name="bot-field" tabindex="-1" autocomplete="off"></label>
+          </p>
+          <div class="field">
+            <label for="contact-name">Name</label>
+            <input id="contact-name" name="name" type="text" autocomplete="name" placeholder="Your name" required>
+          </div>
+          <div class="field">
+            <label for="contact-email">Work email</label>
+            <input id="contact-email" name="email" type="email" autocomplete="email" placeholder="you@organisation.com" required>
+          </div>
+          <div class="field">
+            <label for="contact-organisation">Organisation <span aria-hidden="true">(optional)</span></label>
+            <input id="contact-organisation" name="organisation" type="text" autocomplete="organization" placeholder="Organisation">
+          </div>
+          <div class="field">
+            <label for="contact-message">What are you looking to solve?</label>
+            <textarea id="contact-message" name="message" rows="3" placeholder="A short outline of your project or challenge" required></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary">Send enquiry</button>
+          <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
         </form>
       </div>
     </div>
@@ -455,6 +493,40 @@
     <span>Newton Aycliffe, UK</span>
   </footer>
 </div>
+
+<script>
+  const contactForm = document.getElementById('contact-form');
+  const formStatus = document.getElementById('form-status');
+  const submitButton = contactForm.querySelector('button[type="submit"]');
+
+  contactForm.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    submitButton.disabled = true;
+    submitButton.textContent = 'Sending…';
+    formStatus.textContent = '';
+    formStatus.className = 'form-status';
+
+    try {
+      const response = await fetch('/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams(new FormData(contactForm)).toString()
+      });
+
+      if (!response.ok) throw new Error('Submission failed');
+
+      contactForm.reset();
+      formStatus.textContent = 'Thanks — your enquiry has been sent.';
+      formStatus.classList.add('success');
+    } catch (error) {
+      formStatus.textContent = 'Something went wrong. Please email LetsTalk@ainex.uk instead.';
+      formStatus.classList.add('error');
+    } finally {
+      submitButton.disabled = false;
+      submitButton.textContent = 'Send enquiry';
+    }
+  });
+</script>
 
 </body>
 </html>
