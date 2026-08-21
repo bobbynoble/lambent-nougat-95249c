@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ainex — Agentic AI on Microsoft</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0A0E16;
+    --bg-2:#0F1420;
+    --panel:#131826;
+    --line: rgba(255,255,255,0.09);
+    --line-strong: rgba(255,255,255,0.18);
+    --text:#EAECEF;
+    --text-dim:#8B93A3;
+    --cyan:#4FD1E5;
+    --violet:#8B7FFF;
+    --amber:#F0A855;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:'IBM Plex Sans', sans-serif;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  .wrap{max-width:1000px; margin:0 auto; padding:0 32px; position:relative; z-index:2;}
+  a{color:inherit;}
+
+  .grid-bg{
+    position:fixed; inset:0; z-index:0; pointer-events:none;
+    background-image:
+      linear-gradient(var(--line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line) 1px, transparent 1px);
+    background-size:64px 64px;
+    mask-image:radial-gradient(ellipse 80% 60% at 50% 0%, black 40%, transparent 100%);
+    opacity:0.35;
+  }
+  .glow{
+    position:fixed; z-index:0; pointer-events:none; border-radius:50%;
+    filter:blur(90px); opacity:0.22;
+  }
+  .glow-1{width:520px; height:520px; top:-160px; left:-120px; background:var(--cyan);}
+  .glow-2{width:420px; height:420px; top:200px; right:-140px; background:var(--violet);}
+
+  header{
+    padding:26px 0;
+    border-bottom:1px solid var(--line);
+    position:sticky; top:0; z-index:10;
+    backdrop-filter:blur(14px);
+    background:rgba(10,14,22,0.72);
+  }
+  header .wrap{display:flex; justify-content:space-between; align-items:center;}
+  .logo{
+    font-family:'Space Grotesk', sans-serif;
+    font-weight:700;
+    font-size:20px;
+    letter-spacing:-0.01em;
+    display:flex; align-items:center; gap:8px;
+  }
+  .logo .dot{width:7px; height:7px; border-radius:50%; background:var(--cyan); box-shadow:0 0 10px var(--cyan);}
+  nav{display:flex; gap:34px; font-size:13.5px; font-weight:500;}
+  nav a{text-decoration:none; color:var(--text-dim); transition:color 0.2s;}
+  nav a:hover{color:var(--text);}
+
+  .hero{padding:110px 0 70px; text-align:center;}
+  .eyebrow{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12.5px;
+    color:var(--cyan);
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    margin-bottom:26px;
+    display:inline-flex; align-items:center; gap:10px;
+    border:1px solid var(--line-strong);
+    padding:7px 16px;
+    border-radius:20px;
+    background:rgba(79,209,229,0.06);
+  }
+  .eyebrow::before{content:''; width:6px; height:6px; border-radius:50%; background:var(--cyan); box-shadow:0 0 8px var(--cyan);}
+  h1{
+    font-family:'Space Grotesk', sans-serif;
+    font-weight:600;
+    font-size:56px;
+    line-height:1.08;
+    max-width:760px;
+    margin:0 auto;
+    letter-spacing:-0.02em;
+  }
+  h1 .grad{
+    background:linear-gradient(90deg, var(--cyan), var(--violet));
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+  }
+  .lede{
+    max-width:560px;
+    font-size:17px;
+    color:var(--text-dim);
+    margin:26px auto 0;
+  }
+  .cta-row{display:flex; gap:14px; margin-top:38px; justify-content:center;}
+  .btn{
+    display:inline-flex; align-items:center; gap:8px;
+    padding:13px 26px;
+    font-size:14px;
+    font-weight:600;
+    text-decoration:none;
+    border-radius:8px;
+    transition:all 0.2s;
+  }
+  .btn-primary{
+    background:linear-gradient(90deg, var(--cyan), var(--violet));
+    color:#08101A;
+  }
+  .btn-primary:hover{filter:brightness(1.08);}
+  .btn-secondary{border:1px solid var(--line-strong); color:var(--text);}
+  .btn-secondary:hover{background:rgba(255,255,255,0.04);}
+
+  .stack-line{
+    display:flex; flex-wrap:wrap; justify-content:center; gap:0;
+    align-items:center;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12.5px;
+    color:var(--text-dim);
+    border-top:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+    padding:20px 0;
+    margin:70px 0;
+  }
+  .stack-line .node{padding:4px 16px; position:relative;}
+  .stack-line .node::before{
+    content:''; position:absolute; left:0; top:50%; width:5px; height:5px;
+    border-radius:50%; background:var(--cyan); transform:translateY(-50%);
+    box-shadow:0 0 6px var(--cyan);
+  }
+  .stack-line .node:first-child::before{display:none;}
+
+  section{padding:64px 0;}
+  .section-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:baseline;
+    margin-bottom:40px;
+  }
+  h2{
+    font-family:'Space Grotesk', sans-serif;
+    font-weight:600;
+    font-size:30px;
+    letter-spacing:-0.01em;
+  }
+  .section-tag{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px;
+    color:var(--cyan);
+    letter-spacing:0.04em;
+  }
+
+  .services{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:16px;
+  }
+  .service{
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:12px;
+    padding:28px 24px;
+    transition:border-color 0.2s, transform 0.2s;
+  }
+  .service:hover{border-color:var(--line-strong); transform:translateY(-2px);}
+  .service .num{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px;
+    color:var(--amber);
+    margin-bottom:20px;
+    display:inline-block;
+    border:1px solid var(--line-strong);
+    border-radius:6px;
+    padding:3px 8px;
+  }
+  .service h3{
+    font-family:'Space Grotesk', sans-serif;
+    font-weight:600;
+    font-size:18px;
+    margin-bottom:12px;
+    letter-spacing:-0.005em;
+  }
+  .service p{font-size:14px; color:var(--text-dim);}
+  .service ul{margin-top:18px; padding-left:0; list-style:none;}
+  .service li{
+    font-size:13px;
+    color:var(--text-dim);
+    padding:9px 0;
+    border-top:1px solid var(--line);
+    display:flex; align-items:center; gap:8px;
+  }
+  .service li::before{content:'—'; color:var(--cyan);}
+
+  .about{
+    display:grid;
+    grid-template-columns:1.1fr 1fr;
+    gap:48px;
+    align-items:start;
+  }
+  .about p{font-size:15px; color:var(--text-dim); margin-bottom:16px;}
+  .credentials{
+    background:var(--panel);
+    border:1px solid var(--line);
+    padding:28px;
+    border-radius:12px;
+  }
+  .credentials h4{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11.5px;
+    letter-spacing:0.08em;
+    color:var(--cyan);
+    margin-bottom:20px;
+    text-transform:uppercase;
+  }
+  .credentials .row{
+    display:flex;
+    justify-content:space-between;
+    padding:12px 0;
+    border-top:1px solid var(--line);
+    font-size:13.5px;
+  }
+  .credentials .row:first-of-type{border-top:none;}
+  .credentials .row span:first-child{color:var(--text-dim);}
+  .credentials .row span:last-child{font-family:'IBM Plex Mono', monospace; font-size:12.5px; color:var(--text);}
+
+  .approach{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:20px;
+  }
+  .approach .step{
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:12px;
+    padding:22px 20px;
+    position:relative;
+  }
+  .approach .step::before{
+    content:''; position:absolute; top:0; left:20px; width:28px; height:2px;
+    background:linear-gradient(90deg, var(--cyan), var(--violet));
+  }
+  .approach .step .k{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11.5px;
+    color:var(--violet);
+    display:block;
+    margin:14px 0 10px;
+  }
+  .approach .step h4{font-family:'Space Grotesk', sans-serif; font-size:16px; font-weight:600; margin-bottom:8px;}
+  .approach .step p{font-size:13px; color:var(--text-dim);}
+
+  .contact{
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:16px;
+    padding:56px;
+    margin-top:24px;
+  }
+  .contact-inner{
+    display:grid;
+    grid-template-columns:1.2fr 1fr;
+    gap:56px;
+    align-items:center;
+  }
+  .contact h2{font-size:30px;}
+  .contact p{color:var(--text-dim); font-size:14.5px; margin-top:14px; max-width:400px;}
+  .contact .btn-primary{margin-top:24px;}
+  form{display:flex; flex-direction:column; gap:12px;}
+  input, textarea{
+    background:rgba(255,255,255,0.03);
+    border:1px solid var(--line-strong);
+    color:var(--text);
+    padding:13px 14px;
+    font-family:inherit;
+    font-size:14px;
+    border-radius:8px;
+  }
+  input:focus, textarea:focus{outline:none; border-color:var(--cyan);}
+  input::placeholder, textarea::placeholder{color:var(--text-dim);}
+
+  footer{
+    padding:32px 0 48px;
+    font-size:12.5px;
+    color:var(--text-dim);
+    display:flex;
+    justify-content:space-between;
+    border-top:1px solid var(--line);
+    margin-top:20px;
+  }
+
+  @media (max-width:720px){
+    h1{font-size:36px;}
+    .services, .about, .approach, .contact-inner{grid-template-columns:1fr;}
+    nav{display:none;}
+    .contact{padding:32px;}
+  }
+</style>
+</head>
+<body>
+
+<div class="grid-bg"></div>
+<div class="glow glow-1"></div>
+<div class="glow glow-2"></div>
+
+<header>
+  <div class="wrap">
+    <div class="logo"><span class="dot"></span>ainex</div>
+    <nav>
+      <a href="#services">Services</a>
+      <a href="#approach">Approach</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap">
+  <section class="hero">
+    <div class="eyebrow">agentic ai on microsoft</div>
+    <h1>Agentic AI that survives contact with <span class="grad">how your organisation actually runs.</span></h1>
+    <p class="lede">Independent consultancy for enterprises and public bodies deploying Microsoft Copilot Studio and Azure AI Foundry against real operational, data and governance constraints.</p>
+    <div class="cta-row">
+      <a href="#contact" class="btn btn-primary">Book a scoping call →</a>
+      <a href="#services" class="btn btn-secondary">See what I do</a>
+    </div>
+  </section>
+
+  <div class="stack-line">
+    <span class="node">Copilot Studio</span>
+    <span class="node">Azure AI Foundry</span>
+    <span class="node">Power Platform</span>
+    <span class="node">Enterprise data &amp; integration</span>
+    <span class="node">A2A / MCP agents</span>
+  </div>
+
+  <section id="services">
+    <div class="section-head">
+      <h2>Where I help</h2>
+      <span class="section-tag">03 engagement types</span>
+    </div>
+    <div class="services">
+      <div class="service">
+        <span class="num">01</span>
+        <h3>Agentic AI architecture &amp; build</h3>
+        <p>Design and delivery of Copilot Studio agents and Azure AI Foundry solutions, including multi-agent patterns (A2A, MCP) for real operational workflows.</p>
+        <ul>
+          <li>Agent design and orchestration</li>
+          <li>Foundry solution architecture</li>
+          <li>Proof of concept to production</li>
+        </ul>
+      </div>
+      <div class="service">
+        <span class="num">02</span>
+        <h3>Enterprise adoption &amp; governance</h3>
+        <p>Getting AI solutions through the governance a complex organisation actually requires — information security, data standards and change adoption aligned from day one.</p>
+        <ul>
+          <li>Security &amp; compliance framing</li>
+          <li>Data governance alignment</li>
+          <li>Enterprise systems integration</li>
+        </ul>
+      </div>
+      <div class="service">
+        <span class="num">03</span>
+        <h3>Fractional specialist support</h3>
+        <p>Short, focused engagements — discovery workshops, architecture reviews, or embedded delivery capacity when a programme needs specialist depth fast.</p>
+        <ul>
+          <li>Discovery &amp; scoping workshops</li>
+          <li>Architecture &amp; delivery review</li>
+          <li>Day-rate or fixed-scope engagement</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="approach">
+    <div class="section-head">
+      <h2>How engagements run</h2>
+      <span class="section-tag">typical shape</span>
+    </div>
+    <div class="approach">
+      <div class="step">
+        <span class="k">01 — week 1</span>
+        <h4>Scope</h4>
+        <p>A short call to establish the problem, constraints and what "done" looks like.</p>
+      </div>
+      <div class="step">
+        <span class="k">02 — weeks 1–2</span>
+        <h4>Discovery</h4>
+        <p>Estate, data standards and stakeholder mapping, captured against a clear brief.</p>
+      </div>
+      <div class="step">
+        <span class="k">03 — build</span>
+        <h4>Delivery</h4>
+        <p>Working solution or architecture, iterated against real governance requirements.</p>
+      </div>
+      <div class="step">
+        <span class="k">04 — handover</span>
+        <h4>Transition</h4>
+        <p>Documentation and knowledge transfer so your team owns it going forward.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="about">
+      <div>
+        <div class="section-tag" style="margin-bottom:16px;">about</div>
+        <p>Ainex is the independent practice of a GTM and delivery lead with 20+ years across Microsoft platform delivery, enterprise architecture and digital workplace — now focused on agentic AI.</p>
+        <p>The focus is deliberate: agentic AI that has to survive contact with real governance, legacy estates and procurement — across regulated and complex organisations, not AI as a generic productivity add-on. Healthcare is one specialism among several.</p>
+      </div>
+      <div class="credentials">
+        <h4>Core stack</h4>
+        <div class="row"><span>Agent platform</span><span>Copilot Studio</span></div>
+        <div class="row"><span>Model platform</span><span>Azure AI Foundry</span></div>
+        <div class="row"><span>Automation</span><span>Power Platform</span></div>
+        <div class="row"><span>Architecture</span><span>Enterprise / EA</span></div>
+        <div class="row"><span>Multi-agent</span><span>A2A / MCP</span></div>
+        <div class="row"><span>Sector depth</span><span>Public sector, healthcare</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="contact">
+      <div class="contact-inner">
+        <div>
+          <h2>Have a scope in mind?</h2>
+          <p>Whether it's a discovery workshop, an architecture review, or embedded delivery capacity — tell me what you're working on and I'll tell you honestly whether I'm the right fit.</p>
+          <a href="mailto:hello@ainex.uk" class="btn btn-primary">hello@ainex.uk →</a>
+        </div>
+        <form onsubmit="return false;">
+          <input type="text" placeholder="Name">
+          <input type="email" placeholder="Work email">
+          <input type="text" placeholder="Organisation">
+          <textarea rows="3" placeholder="What are you looking to solve?"></textarea>
+          <button type="submit" class="btn btn-primary" style="border:none; cursor:pointer; justify-content:center;">Send</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <span>© 2026 Ainex</span>
+    <span>Newton Aycliffe, UK</span>
+  </footer>
+</div>
+
+</body>
+</html>
