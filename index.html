@@ -515,7 +515,7 @@
           <p>Whether it's a discovery workshop, an architecture review, or embedded delivery capacity — tell me what you're working on and I'll tell you honestly whether I'm the right fit.</p>
           <a href="mailto:LetsTalk@ainex.uk" class="btn btn-primary">LetsTalk@ainex.uk →</a>
         </div>
-        <form class="contact-form" id="contact-form" name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+        <form class="contact-form" id="contact-form" name="contact" method="POST" action="/?enquiry=sent#contact" data-netlify="true" netlify-honeypot="bot-field">
           <input type="hidden" name="form-name" value="contact">
           <input type="hidden" name="subject" value="New Ainex website enquiry">
           <p class="bot-field" aria-hidden="true">
@@ -576,32 +576,19 @@
   const formStatus = document.getElementById('form-status');
   const submitButton = contactForm.querySelector('button[type="submit"]');
 
-  contactForm.addEventListener('submit', async (event) => {
-    event.preventDefault();
+  const enquirySent = new URLSearchParams(window.location.search).get('enquiry') === 'sent';
+
+  if (enquirySent) {
+    formStatus.textContent = 'Thanks — your enquiry has been sent.';
+    formStatus.classList.add('success');
+    window.history.replaceState({}, '', `${window.location.pathname}#contact`);
+  }
+
+  contactForm.addEventListener('submit', () => {
     submitButton.disabled = true;
     submitButton.textContent = 'Sending…';
     formStatus.textContent = '';
     formStatus.className = 'form-status';
-
-    try {
-      const response = await fetch('/', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: new URLSearchParams(new FormData(contactForm)).toString()
-      });
-
-      if (!response.ok) throw new Error('Submission failed');
-
-      contactForm.reset();
-      formStatus.textContent = 'Thanks — your enquiry has been sent.';
-      formStatus.classList.add('success');
-    } catch (error) {
-      formStatus.textContent = 'Something went wrong. Please email LetsTalk@ainex.uk instead.';
-      formStatus.classList.add('error');
-    } finally {
-      submitButton.disabled = false;
-      submitButton.textContent = 'Send enquiry';
-    }
   });
 </script>
 
