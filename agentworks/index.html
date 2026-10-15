@@ -1,0 +1,307 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AgentWorks — Fixed-price Copilot agents | Ainex</title>
+<meta name="description" content="Fixed-price Copilot Studio agents in three modular tiers, from £2,250 per agent and live in 5–15 working days. Free 60-minute scoping session.">
+<meta property="og:title" content="Ainex AgentWorks — Fixed-price Copilot agents">
+<meta property="og:description" content="Three modular tiers from £2,250 per agent. Live in days, not quarters. Free scoping session.">
+<meta property="og:url" content="https://ainex.uk/agentworks">
+<meta property="og:type" content="website">
+<link rel="canonical" href="https://ainex.uk/agentworks">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0A1020; --surface:#111A30; --surface-2:#14203B; --line:#22304D; --line-2:#2A3654;
+  --text:#E6ECF5; --muted:#B8C3D6; --dim:#8FA0BC; --white:#FFFFFF;
+  --cyan:#22D3EE; --cyan-text:#5EE3F5; --on-cyan:#06202A; --violet:#A78BFA; --violet-text:#C4B5FD;
+  --display:'Space Grotesk',sans-serif; --body:'IBM Plex Sans',sans-serif; --mono:'IBM Plex Mono',monospace;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--body);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased}
+a{color:var(--cyan-text)}a:hover{color:#A5F0FA}
+a:focus-visible,button:focus-visible{outline:2px solid var(--cyan);outline-offset:3px;border-radius:4px}
+.wrap{max-width:1200px;margin:0 auto;padding:0 24px}
+.eyebrow{font-family:var(--mono);font-size:14px;color:var(--cyan-text);letter-spacing:1px}
+h1,h2,h3{font-family:var(--display);color:var(--white);margin:0}
+h2{font-size:clamp(32px,4.5vw,44px);line-height:1.1;letter-spacing:-1px}
+p{margin:0}
+ul{margin:0}
+
+/* header */
+.site-header .wrap{display:flex;flex-wrap:wrap;gap:16px;align-items:center;justify-content:space-between;padding-top:24px;padding-bottom:24px}
+.logo{font-family:var(--display);font-weight:700;font-size:26px;color:var(--white);text-decoration:none;letter-spacing:-.5px}
+.logo:hover{color:var(--white)}
+.nav{display:flex;flex-wrap:wrap;gap:8px 24px;font-size:15px}
+.nav a{color:var(--muted);text-decoration:none;padding:6px 0}
+.nav a:hover,.nav a[aria-current]{color:var(--white)}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;min-height:44px;padding:14px 24px;border-radius:8px;background:var(--cyan);color:var(--on-cyan);font-weight:600;text-decoration:none}
+.btn:hover{background:#5EE3F5;color:var(--on-cyan)}
+.btn-ghost{display:inline-flex;align-items:center;min-height:44px;padding:14px 4px;color:var(--white);text-decoration:none;border-bottom:1px solid #3A4866}
+.btn-ghost:hover{color:var(--cyan-text);border-color:var(--cyan-text)}
+
+/* hero */
+.hero{padding:72px 0 88px}
+.hero .wrap{display:flex;flex-direction:column;gap:28px}
+.hero h1{font-weight:700;font-size:clamp(40px,6vw,76px);line-height:1.04;letter-spacing:-2px;max-width:960px}
+.lead{font-size:20px;color:var(--muted);max-width:720px}
+.actions{display:flex;flex-wrap:wrap;gap:16px;align-items:center}
+.chips{display:flex;flex-wrap:wrap;gap:12px;margin-top:8px;padding:0;list-style:none}
+.chips li{border:1px solid var(--line-2);border-radius:999px;padding:6px 14px;font-size:14px;color:#D3DBE8}
+
+/* offer band */
+.band{background:var(--surface);border-top:1px solid #1E2A44;border-bottom:1px solid #1E2A44}
+.band .wrap{display:flex;flex-wrap:wrap;gap:12px 24px;align-items:center;justify-content:space-between;padding-top:22px;padding-bottom:22px}
+.tag{font-family:var(--mono);font-size:13px;font-weight:500;color:var(--bg);background:var(--violet);padding:4px 10px;border-radius:4px}
+.band strong{color:var(--white);font-weight:500}
+.band .sub{color:var(--muted);font-size:15px}
+
+/* sections */
+section.block{padding:64px 0}
+.section-head{display:flex;flex-direction:column;gap:12px;margin-bottom:40px}
+
+/* tiers */
+#tiers{padding-top:96px;padding-bottom:48px}
+.tiers{display:flex;flex-wrap:wrap;gap:20px;align-items:stretch}
+.tier{flex:1 1 300px;min-width:0;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:32px;display:flex;flex-direction:column;gap:20px}
+.tier.featured{background:var(--surface-2);border-color:var(--cyan)}
+.tier-top{display:flex;justify-content:space-between;align-items:center}
+.num{font-family:var(--mono);font-size:13px;color:var(--dim)}
+.badge{font-family:var(--mono);font-size:12px;color:var(--on-cyan);background:var(--cyan);padding:3px 8px;border-radius:4px}
+.tier h3{font-size:28px}
+.tier .desc{color:var(--muted)}
+.price-row{display:flex;align-items:baseline;flex-wrap:wrap;gap:10px}
+.price{font-family:var(--display);font-size:44px;font-weight:700;color:var(--white);line-height:1.1}
+.was{color:var(--dim);text-decoration:line-through}
+.from{font-size:16px;color:var(--muted)}
+.price-meta{font-size:14px;color:var(--dim)}
+.tier ul{padding-left:20px;color:#D3DBE8;display:flex;flex-direction:column;gap:8px}
+.tier .eg{margin-top:auto;font-size:14px;color:var(--dim)}
+.small-print{margin-top:28px;font-size:15px;color:var(--dim)}
+
+/* steps */
+.steps{display:flex;flex-wrap:wrap;gap:32px;list-style:none;padding:0;margin:0}
+.steps li{flex:1 1 220px;min-width:0;border-top:1px solid var(--line-2);padding-top:20px;display:flex;flex-direction:column;gap:8px}
+.step-label{font-family:var(--mono);font-size:13px;color:var(--violet-text)}
+.steps h3{font-size:22px}
+.steps p{color:var(--muted)}
+
+/* info cards */
+.cards{display:flex;flex-wrap:wrap;gap:20px}
+.card{flex:1 1 340px;min-width:0;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:32px;display:flex;flex-direction:column;gap:14px}
+.card h3{font-size:24px}
+.card p{color:var(--muted)}
+
+/* faq */
+.faq{display:flex;flex-wrap:wrap;gap:32px 48px}
+.faq div{flex:1 1 440px;min-width:0;display:flex;flex-direction:column;gap:6px}
+.faq h3{font-size:20px}
+.faq p{color:var(--muted)}
+
+/* cta */
+#contact{padding:48px 0 96px}
+.cta{background:var(--surface-2);border:1px solid #2A3A60;border-radius:18px;padding:56px 40px;display:flex;flex-wrap:wrap;gap:32px;align-items:center;justify-content:space-between}
+.cta div{flex:1 1 480px;min-width:0;display:flex;flex-direction:column;gap:12px}
+.cta h2{font-size:clamp(30px,4vw,40px)}
+.cta p{color:var(--muted)}
+
+/* footer */
+.site-footer{border-top:1px solid #1E2A44}
+.site-footer .wrap{display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;padding-top:28px;padding-bottom:28px;font-size:14px;color:var(--dim)}
+
+@media (max-width:600px){
+  body{font-size:16px}
+  .hero{padding:40px 0 56px}
+  .lead{font-size:18px}
+  .tier,.card{padding:24px}
+  .cta{padding:36px 24px}
+}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="logo" href="/">ainex</a>
+    <nav class="nav" aria-label="Main">
+      <a href="/#services">Services</a>
+      <a href="/agentworks" aria-current="page">AgentWorks</a>
+      <a href="/healthcare">Healthcare</a>
+      <a href="/responsible-ai">Responsible AI</a>
+      <a href="/about">About</a>
+      <a href="/#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+<section class="hero">
+  <div class="wrap">
+    <div class="eyebrow">ainex agentworks · fixed-price copilot agents</div>
+    <h1>Copilot agents at a fixed price, live in days, not quarters.</h1>
+    <p class="lead">You've bought Microsoft 365. AgentWorks turns it into working Copilot Studio agents in three modular tiers, built by a Microsoft specialist with 20+ years of delivery in regulated organisations.</p>
+    <div class="actions">
+      <a class="btn" href="#contact">Book a free scoping call →</a>
+      <a class="btn-ghost" href="#tiers">See the three tiers</a>
+    </div>
+    <ul class="chips">
+      <li>From £2,250 per agent</li>
+      <li>5–15 working days</li>
+      <li>You own everything built</li>
+      <li>Running-cost estimate included</li>
+    </ul>
+  </div>
+</section>
+
+<div class="band">
+  <div class="wrap">
+    <div class="actions" style="gap:12px">
+      <span class="tag">FOUNDING CLIENT OFFER</span>
+      <strong>Launch pricing on the first 10 agents, until 31 March 2027.</strong>
+    </div>
+    <span class="sub">Plus your first month of the Agent Care Plan free.</span>
+  </div>
+</div>
+
+<section id="tiers">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">03 tiers · priced per agent</div>
+      <h2>Count the sources and actions. That's your price.</h2>
+    </div>
+    <div class="tiers">
+
+      <article class="tier">
+        <div class="tier-top"><span class="num">01</span></div>
+        <h3>Essential</h3>
+        <p class="desc">A knowledge agent that answers questions from your own content.</p>
+        <div>
+          <div class="price-row"><span class="price">£2,250</span><span class="was"><span class="sr-only" style="position:absolute;left:-9999px">Standard price </span>£3,500</span></div>
+          <div class="price-meta">launch price · ex VAT · 5 working days</div>
+        </div>
+        <ul>
+          <li>Up to 3 knowledge sources</li>
+          <li>Up to 8 conversation topics</li>
+          <li>Teams or Microsoft 365 Copilot</li>
+          <li>20-question test set and DLP check</li>
+          <li>7 days hypercare</li>
+        </ul>
+        <p class="eg">e.g. HR policy assistant, IT self-help, onboarding buddy</p>
+      </article>
+
+      <article class="tier featured">
+        <div class="tier-top"><span class="num">02</span><span class="badge">MOST CHOSEN</span></div>
+        <h3>Connected</h3>
+        <p class="desc">An agent that answers and takes action in your systems.</p>
+        <div>
+          <div class="price-row"><span class="price">£3,950</span><span class="was"><span style="position:absolute;left:-9999px">Standard price </span>£6,500</span></div>
+          <div class="price-meta">launch price · ex VAT · 10 working days</div>
+        </div>
+        <ul>
+          <li>Up to 6 knowledge sources, 15 topics</li>
+          <li>Up to 3 actions via connectors or flows</li>
+          <li>Entra ID sign-in, 2 channels</li>
+          <li>Human handoff, dev + prod packaging</li>
+          <li>14 days hypercare</li>
+        </ul>
+        <p class="eg">e.g. helpdesk agent that logs tickets, booking or request agent</p>
+      </article>
+
+      <article class="tier">
+        <div class="tier-top"><span class="num">03</span></div>
+        <h3>Orchestrated</h3>
+        <p class="desc">Multi-step, multi-system agents with governance built in.</p>
+        <div>
+          <div class="price-row"><span class="from">from</span><span class="price">£5,950</span><span class="was"><span style="position:absolute;left:-9999px">Standard price </span>£9,950</span></div>
+          <div class="price-meta">launch price · ex VAT · 15 working days</div>
+        </div>
+        <ul>
+          <li>Lead agent + up to 2 child agents</li>
+          <li>Up to 10 sources, 6 actions incl. custom API</li>
+          <li>Dev, test, prod with ALM pipeline</li>
+          <li>75-case evaluation set, Responsible AI review</li>
+          <li>30 days hypercare</li>
+        </ul>
+        <p class="eg">e.g. service desk triage, case intake and routing</p>
+      </article>
+
+    </div>
+    <p class="small-print">Prices are per agent and exclude Microsoft licences and Copilot Credits. 3 agents ordered together: 10% off.</p>
+  </div>
+</section>
+
+<section class="block">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">how it runs</div>
+      <h2>Scope, quote, build, hand over.</h2>
+    </div>
+    <ol class="steps">
+      <li><span class="step-label">01 — free, 60 min</span><h3>Scoping session</h3><p>We pin down the job, the sources, the actions and who uses it.</p></li>
+      <li><span class="step-label">02 — within 2 days</span><h3>Fixed quote</h3><p>Your tier, written limits, delivery date and a Copilot Credit estimate.</p></li>
+      <li><span class="step-label">03 — 5 to 15 days</span><h3>Build and test</h3><p>Built in your tenant, tested against a set of real questions, governance checked.</p></li>
+      <li><span class="step-label">04 — handover</span><h3>It's yours</h3><p>Documentation, training and hypercare. Your team owns it from day one.</p></li>
+    </ol>
+  </div>
+</section>
+
+<section class="block" style="padding-top:48px;padding-bottom:48px">
+  <div class="wrap">
+    <div class="cards">
+      <div class="card">
+        <h3>Agent Care Plan · £295 / month</h3>
+        <p>Monthly credit and usage report, up to 3 hours of tuning and small changes, knowledge refresh, priority fixes within 2 working days and a quarterly next-agent review. Per agent, 3-month minimum.</p>
+      </div>
+      <div class="card">
+        <h3>Not in the fixed price</h3>
+        <p>Microsoft licences and Copilot Credits, data clean-up before it's used, changes to third-party systems, and code outside Copilot Studio and Power Platform. Anything new is quoted in writing first.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="block">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">questions</div>
+      <h2>The honest answers.</h2>
+    </div>
+    <div class="faq">
+      <div><h3>Why is it priced so far below the big partners?</h3><p>One specialist, no account managers, a repeatable build method, and launch pricing in exchange for a case study.</p></div>
+      <div><h3>What will it cost to run?</h3><p>You get a Copilot Credit estimate before you sign. Orchestrated builds include usage monitoring.</p></div>
+      <div><h3>What if my agent doesn't fit a tier?</h3><p>The scoping session decides. If it's bigger, you still get a fixed quote, never an open day rate.</p></div>
+      <div><h3>Where does our data go?</h3><p>Agents run in your Microsoft tenant, under your policies. Nothing is held outside it.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="wrap">
+    <div class="cta">
+      <div>
+        <h2>Have an agent in mind?</h2>
+        <p>Book the free 60-minute scoping session. You'll leave with a tier, a fixed quote and a running-cost estimate. 3 build slots a month.</p>
+      </div>
+      <a class="btn" href="mailto:LetsTalk@ainex.uk?subject=AgentWorks%20scoping%20session">LetsTalk@ainex.uk →</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <span>© 2026 Ainex · Newton Aycliffe, UK</span>
+    <span>Agentic AI on Microsoft</span>
+  </div>
+</footer>
+
+</body>
+</html>
